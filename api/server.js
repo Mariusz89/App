@@ -7,6 +7,18 @@ require('dotenv').config();
 
 const app = express();
 
+// Connect to our Database and handle an bad connections
+mongoose
+    .connect(process.env.DATABASE, { 
+        useNewUrlParser: true, 
+        useFindAndModify: false,
+        useUnifiedTopology: true, 
+        useCreateIndex: true  
+    })
+    .then(() => console.log("DB server connect"))
+    .catch(error => console.log("DB error", error))
+
+
 const authRoutes = require('./routes/auth');
 
 app.use(morgan('dev'));
@@ -14,7 +26,7 @@ app.use(bodyParser.json());
 
 if(process.env.NODE_ENV === 'development') {
     app.use(cors({
-        origin: `http://localhost:3000`
+        origin: `${process.env.CLIENT_URL}`
     }));
 }
 
