@@ -16,13 +16,15 @@ const Layout = ({children}) => {
 		<Menu  mode="horizontal">
         <Menu.Item key="mail">
           <MailOutlined />
-					<Link href="/" rel="noopener noreferrer">
-						Navigation One
+					<Link to="/" rel="noopener noreferrer">
+						Home
           </Link>
         </Menu.Item>
-        <Menu.Item key="app" disabled>
+        <Menu.Item key="app">
           <AppstoreOutlined />
-          Navigation Two
+					<Link to="/signup" rel="noopener noreferrer">
+						Signup
+          </Link>
         </Menu.Item>
         <SubMenu
           title={
