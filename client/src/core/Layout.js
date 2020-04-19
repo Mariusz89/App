@@ -44,9 +44,9 @@ const Layout = ({children}) => {
           </Menu.ItemGroup>
         </SubMenu>
         <Menu.Item key="alipay">
-          <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-            Navigation Four - Link
-          </a>
+          <Link to="/signin" rel="noopener noreferrer">
+            Signin
+          </Link>
         </Menu.Item>
       </Menu>
 	);
