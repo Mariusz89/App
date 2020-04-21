@@ -5,19 +5,19 @@ import {
   AppstoreOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 const { SubMenu } = Menu;
 
 
-const Layout = ({children}) => {
+const Layout = ({children, history}) => {
 
 	const nav = () => (
 		<Menu  mode="horizontal">
         <Menu.Item key="mail">
           <MailOutlined />
 					<Link to="/" rel="noopener noreferrer">
-						Home
+						Home/ {JSON.stringify(history)}
           </Link>
         </Menu.Item>
         <Menu.Item key="app">
@@ -61,4 +61,4 @@ const Layout = ({children}) => {
 	);
 };
 
-export default Layout;
+export default withRouter(Layout);
