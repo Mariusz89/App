@@ -118,7 +118,6 @@ const Signin = () => {
 	return (
 		<Layout>
 				<ToastContainer />
-        {JSON.stringify({email, password})}
 				<h1 className="text-center">Signin</h1>
 				{signinForm()}
 		</Layout>

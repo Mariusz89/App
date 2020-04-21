@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import { Menu } from 'antd';
 import {
   MailOutlined,
@@ -10,17 +10,18 @@ import {Link, withRouter} from 'react-router-dom';
 const { SubMenu } = Menu;
 
 
-const Layout = ({children, history}) => {
+const Layout = ({children, match, history}) => {
 
 	const nav = () => (
-		<Menu  mode="horizontal">
-        <Menu.Item key="mail">
+    
+		<Menu defaultSelectedKeys={['/']} selectedKeys={[match.path]} mode="horizontal">
+        <Menu.Item key="/">
           <MailOutlined />
 					<Link to="/" rel="noopener noreferrer">
-						Home/ {JSON.stringify(history)}
+						Home
           </Link>
         </Menu.Item>
-        <Menu.Item key="app">
+        <Menu.Item key="/signup">
           <AppstoreOutlined />
 					<Link to="/signup" rel="noopener noreferrer">
 						Signup
@@ -43,7 +44,7 @@ const Layout = ({children, history}) => {
             <Menu.Item key="setting:4">Option 4</Menu.Item>
           </Menu.ItemGroup>
         </SubMenu>
-        <Menu.Item key="alipay">
+        <Menu.Item key="/signin">
           <Link to="/signin" rel="noopener noreferrer">
             Signin
           </Link>
