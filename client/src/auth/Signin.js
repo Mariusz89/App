@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import Layout from '../core/Layout';
 import axios from 'axios';
+import {authenticate, isAuth} from './helpers';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -58,9 +59,11 @@ const Signin = () => {
       data: {email, password}
     })
     .then(res => {
-      console.log(res, 'Signin success')
-      setValues({...values, email: '', password: '', buttonText: 'Submitted'});
-      toast.success(`Hey ${res.data.user.name}. Welcome back`);
+      authenticate(res, () => {
+        console.log(res, 'Signin success');
+        setValues({...values, email: '', password: '', buttonText: 'Submitted'});
+        toast.success(`Hey ${res.data.user.name}. Welcome back`);
+      });
     })
     .catch(err => {
       console.log('Signin error', err.response.data);
@@ -118,6 +121,7 @@ const Signin = () => {
 	return (
 		<Layout>
 				<ToastContainer />
+        {isAuth() ? <Redirect to="/" /> : null} 
 				<h1 className="text-center">Signin</h1>
 				{signinForm()}
 		</Layout>
