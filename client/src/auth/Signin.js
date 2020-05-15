@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import {Link, Redirect, useHistory} from 'react-router-dom';
 import Layout from '../core/Layout';
 import axios from 'axios';
 import {authenticate, isAuth} from './helpers';
@@ -11,6 +11,7 @@ import {
   Tooltip,
 	Button
 } from 'antd';
+
 
 const layout = {
   labelCol: {
@@ -30,7 +31,7 @@ const tailLayout = {
 
 toast.configure();
 
-const Signin = () => {
+const Signin = ({history}) => {
 
 	const [values, setValues] = useState({
 		email: '',
@@ -60,16 +61,20 @@ const Signin = () => {
     })
     .then(response  => {
       authenticate(response, () => {
+
         console.log(response, 'Signin success: ', response.data.user.name);
         setValues({...values, email: '', password: '', buttonText: 'Submitted'});
-        toast.success(`Hey ${response.data.user.name}. Welcome back`);
+        //toast.success(`Hey ${response.data.user.name}. Welcome back`);
+
+        isAuth() && isAuth().role === 'admin' ? history.push('/admin') : history.push('/private');
       });
     })
     .catch(err => {
-      console.log('Signin error', err.response.data);
+      console.log('error', err);
+      console.log('Signin error', err && err.response.data ? err.response.data : null);
 
       setValues({...values, buttonText: 'Submit'});
-      toast.error(err.response.data.error);
+      toast.error(err && err.response.data ? err.response.data : null);
     })
 	}
 

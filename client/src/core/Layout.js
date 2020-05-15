@@ -30,6 +30,20 @@ const Layout = ({children, match, history}) => {
             </Link>
           </Menu.Item>
         }
+        {isAuth() && isAuth().role === 'admin' && (
+          <Menu.Item key="/admin">
+            <Link to="/admin" rel="noopener noreferrer">
+              {isAuth().name}
+            </Link>
+          </Menu.Item>
+        )}
+        {isAuth() && isAuth().role === 'subscriber' && (
+          <Menu.Item key="/private">
+            <Link to="/private" rel="noopener noreferrer">
+              {isAuth().name}
+            </Link>
+          </Menu.Item>
+        )}
         {isAuth() ?
           <Menu.Item onClick={() => signout(() => {
             history.push('/')
