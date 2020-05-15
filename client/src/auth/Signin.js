@@ -58,11 +58,11 @@ const Signin = () => {
       url: `${process.env.REACT_APP_API}/signin`,
       data: {email, password}
     })
-    .then(res => {
-      authenticate(res, () => {
-        console.log(res, 'Signin success');
+    .then(response  => {
+      authenticate(response, () => {
+        console.log(response, 'Signin success: ', response.data.user.name);
         setValues({...values, email: '', password: '', buttonText: 'Submitted'});
-        toast.success(`Hey ${res.data.user.name}. Welcome back`);
+        toast.success(`Hey ${response.data.user.name}. Welcome back`);
       });
     })
     .catch(err => {
