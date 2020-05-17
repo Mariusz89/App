@@ -2,9 +2,9 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED;
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const expressJwt = require('express-jwt');
 
-
-exports.signup =  (req, res) => {
+module.exports.signup =  (req, res) => {
 	const {name, email, password} = req.body;
 
 	User.findOne({email}).exec((err, user) => {
@@ -59,7 +59,7 @@ exports.signup =  (req, res) => {
 	});
 };
 
-exports.accountActivation = (req, res) => {
+module.exports.accountActivation = (req, res) => {
 	const {token} = req.body;
 
 	if(token) {
@@ -97,7 +97,7 @@ exports.accountActivation = (req, res) => {
 	}
 };
 
-exports.signin = (req, res) => {
+module.exports.signin = (req, res) => {
 	const {email, password} = req.body;
 
 	User.findOne({email}).exec((err, user) => {
@@ -120,5 +120,13 @@ exports.signin = (req, res) => {
 			token,
 			user: {_id, name, email, role}
 		});
+
+		console.log(expressJwt({
+			secret: process.env.JWT_SECRET
+		}));
 	});
 };
+
+module.exports.requireSignin = expressJwt({
+	secret: process.env.JWT_SECRET
+});
